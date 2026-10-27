@@ -1,7 +1,7 @@
 /* A.d.M. S.r.l. — foglio di stile unico. Nessuna dipendenza esterna. */
 :root{
   --blu:#004080; --blu-scuro:#002a57; --blu-notte:#001a38; --rosso:#ec1c24;
-  --inchiostro:#132238; --testo:#3c4a5c; --tenue:#6b7889;
+  --inchiostro:#132238; --testo:#3c4a5c; --tenue:#536174;
   --fondo:#ffffff; --fondo-soft:#f3f7fb; --linea:#dfe6ee;
   --raggio:14px; --ombra:0 10px 30px rgba(0,42,87,.10);
   --max:1180px; --gutter:clamp(16px,4vw,32px);
@@ -202,8 +202,6 @@ button.linea-apri{background:transparent;border-left:0;border-right:0;border-bot
 .faq-wrap{max-width:920px}.faq-list{display:grid;gap:12px}.faq-item{background:#fff;border:1px solid var(--linea);border-radius:12px;overflow:hidden}.faq-item summary{cursor:pointer;padding:20px 24px;font-weight:700;color:var(--blu);min-height:48px}.faq-item p{padding:0 24px 22px;margin:0}.faq-item[open] summary{padding-bottom:12px}.faq-item a{font-weight:600}.faq-item summary:focus-visible{outline:3px solid var(--blu);outline-offset:-4px}
 [id="eos-chemo"],[id="eir-line"],[id="dike-line"],[id="khors-line"]{scroll-margin-top:110px}
 
-.avviso-anteprima{background:#fff3d6;color:#62450c;text-align:center;padding:10px 18px;font-size:.85rem;line-height:1.5;border-bottom:1px solid #ebd394}
-
 .player-locale{border:1px solid var(--linea);border-radius:16px;overflow:hidden;background:#fff;box-shadow:var(--ombra)}
 .player-locale video{display:block;width:100%;height:auto;background:#071d38}
 .player-stato{font-size:.88rem;color:var(--tenue);margin:0;padding:10px 18px 16px}
@@ -212,3 +210,15 @@ button.linea-apri{background:transparent;border-left:0;border-right:0;border-bot
 .catalogo-foto figure{margin:0 0 24px}.catalogo-foto img{aspect-ratio:auto;max-height:320px;object-fit:contain;background:#f5f7fa}.catalogo-foto figcaption{font-size:.82rem;color:var(--tenue);padding:8px 0}
 .catalogo-dettagli{border:1px solid var(--linea);border-radius:10px;margin:12px 0;overflow:hidden}.catalogo-dettagli summary{cursor:pointer;padding:15px;font-weight:700;color:var(--blu)}.catalogo-tabella{overflow-x:auto;max-width:100%;padding:0 12px 12px}.catalogo-tabella table{border-collapse:collapse;font-size:.8rem;min-width:460px;width:100%}.catalogo-tabella caption{text-align:left;font-weight:700;padding:10px 0}.catalogo-tabella th,.catalogo-tabella td{padding:9px;text-align:left;border-bottom:1px solid var(--linea);vertical-align:top}.catalogo-tabella thead{background:#f0f5fa}.catalogo-tabella th[scope=row]{white-space:nowrap}.linea-testo h3{margin-top:24px}
 @media(max-width:620px){.catalogo-foto{display:flex;overflow-x:auto;gap:14px;scroll-snap-type:x proximity}.catalogo-foto figure{flex:0 0 85%;min-width:0;margin:0;scroll-snap-align:start}.catalogo-foto img{height:170px;width:100%;max-height:none}.catalogo-tabella table{font-size:.75rem}}
+
+/* Accessibilità: contrasto, focus, ingrandimento e controlli. */
+.contatti .btn-chiaro{color:var(--blu)}
+:focus-visible{outline:3px solid #004080;outline-offset:3px;box-shadow:0 0 0 6px #fff}
+.hero :focus-visible,.contatti :focus-visible,.footer :focus-visible{outline-color:#fff;box-shadow:0 0 0 6px #004080}
+.menu-toggle,.popup-chiudi,.linea-chiudi{min-width:44px;min-height:44px}
+.popup-chiudi{width:44px;height:44px}.popup:not(.popup-linea){padding-top:68px}
+.due-colonne>*,.footer-griglia>*{min-width:0}
+.sede p,.footer p,.linea-email{overflow-wrap:anywhere}
+.catalogo-tabella{scroll-margin-block:80px}
+@media(max-width:900px){.js .nav{max-height:calc(100dvh - 80px);overflow-y:auto}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

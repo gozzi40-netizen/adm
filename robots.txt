@@ -1,3 +1,2 @@
-# Il crawler deve poter leggere il meta noindex nelle pagine.
 User-agent: *
 Allow: /

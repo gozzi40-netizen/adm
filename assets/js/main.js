@@ -4,36 +4,38 @@ document.documentElement.classList.replace('no-js','js');
 (function(){
   var btn=document.querySelector('.menu-toggle'), nav=document.getElementById('nav');
   if(btn&&nav){
-    btn.addEventListener('click',function(){
-      var aperto=nav.classList.toggle('aperto');
-      btn.setAttribute('aria-expanded',aperto?'true':'false');
-    });
-    nav.addEventListener('click',function(e){
-      if(e.target.closest('a')){nav.classList.remove('aperto');btn.setAttribute('aria-expanded','false');}
+    function setMenu(open){
+      nav.classList.toggle('aperto',open);
+      btn.setAttribute('aria-expanded',String(open));
+      btn.setAttribute('aria-label',open?(document.documentElement.lang==='en'?'Close menu':'Chiudi il menu'):(document.documentElement.lang==='en'?'Open menu':'Apri il menu'));
+    }
+    btn.addEventListener('click',function(){setMenu(btn.getAttribute('aria-expanded')!=='true');});
+    nav.addEventListener('click',function(e){if(e.target.closest('a')) setMenu(false);});
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&btn.getAttribute('aria-expanded')==='true'){
+        setMenu(false);btn.focus();
+      }
     });
   }
 
   var y=document.getElementById('anno'); if(y){y.textContent=new Date().getFullYear();}
 })();
 
-// Popup contatti: argomenti con messaggio precompilato (email e WhatsApp).
-// NUMERO WHATSAPP: inserire in formato internazionale senza + né spazi, es. '393331234567'.
-// Finché è vuoto, i pulsanti WhatsApp restano nascosti.
+// Popup contatti via email.
 (function(){
-  var WHATSAPP='';
   var d=document.getElementById('popup-contatto');
   if(!d||typeof d.showModal!=='function') return; // senza supporto: i link restano mailto normali
   d.querySelectorAll('.servizio').forEach(function(s){
     var msg=s.getAttribute('data-msg'), ogg=s.getAttribute('data-oggetto');
     s.querySelector('[data-canale="email"]').href='mailto:info@admsrl.eu?subject='+encodeURIComponent(ogg)+'&body='+encodeURIComponent(msg);
-    var wa=s.querySelector('[data-canale="wa"]');
-    if(WHATSAPP){ wa.href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(msg); wa.hidden=false; }
   });
+  var opener=null;
   document.querySelectorAll('[data-contatto]').forEach(function(b){
-    b.addEventListener('click',function(e){ e.preventDefault(); d.showModal(); });
+    b.addEventListener('click',function(e){ e.preventDefault(); opener=b; d.showModal(); });
   });
   d.querySelector('.popup-chiudi').addEventListener('click',function(){ d.close(); });
-  d.addEventListener('click',function(e){ if(e.target===d) d.close(); });
+  d.addEventListener('close',function(){if(opener) opener.focus({preventScroll:true});});
+  d.addEventListener('click',function(e){var r=d.getBoundingClientRect();if(e.target===d&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)) d.close();});
 })();
 
 // Dialog nativi: focus confinato, Escape e ritorno alla scheda di partenza.
@@ -50,3 +52,5 @@ document.documentElement.classList.replace('no-js','js');
   dialog.addEventListener('close',function(){link.focus({preventScroll:true});});
  });
 })();
+
+(function(){document.querySelectorAll('.language-switch a').forEach(function(a){a.addEventListener('click',function(){if(location.hash && document.querySelector('.hero-plasma')) a.hash=location.hash;});});})();
